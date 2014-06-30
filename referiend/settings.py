@@ -174,7 +174,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
-if get_env_variable('DEVELOPMENT') == True:
+if get_env_variable('DEVELOPMENT') == 'True':
     INSTALLED_APPS += ('debug_toolbar', )
 
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
@@ -185,4 +185,10 @@ if get_env_variable('DEVELOPMENT') == True:
 
     TEMPLATE_DEBUG = True
 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
