@@ -1,0 +1,7 @@
+<form method="post" action='{% url "yayornay" %}'>{% csrf_token %}
+    <input type="hidden" name="id" value="{{ referral.id }}">
+    <div class="btn-group">
+        <button type="submit" name="yay" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> ({{ referral.yay }})</button>
+        <button type="submit" name="nay" class="btn btn-danger"><span class="glyphicon glyphicon-thumbs-down"></span> ({{ referral.nay }})</button>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block head_title %}Search{% endblock %}
+
+{% block body %}
+<div>
+
+  <div>
+    {% if referrals %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Referral</th>
+          <th>User</th>
+          <th>URL/Code</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for referral in referrals %}
+      <tr>
+        <td><a href='{% url "referral_detail" referral.id referral.slug %}'>{{ referral.title }}</a></td>
+        <td>{{ referral.author }}</td>
+        <td>{{ referral.url }} / {{ referral.code }}</td>
+        <td>{{ referral.info }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,125 @@
+{% load i18n %}
+{% if request.user.is_authenticated == False %}
+    <div class="row">
+        
+        <div class="col-sm-12 col-lg-12">
+            <div class="jumbotron">
+            <h1>EARN Money! SAVE Money</h1>
+            <p class="lead"><i>{{ SITE_TITLE }} is a directory of social referral links and coupon codes </i></p>
+                          <p><b>{{ referral_count }}</b> {% trans 'links, codes and counting' %}</p>
+                                              <p>
+                            {% trans 'Want to add your own referrals? Add them now! It is quick and easy.' %}
+                        </p>
+            <p><a class="btn btn-lg btn-success" href="{% url 'referral_add' %}">{% trans 'Add Referral' %}&nbsp;<span class="glyphicon glyphicon-share-alt"></span></a></p>
+          </div>
+                        
+        </div>
+    </div>
+{% endif %}
+    <div class="row">
+        
+                    <div class="col-sm-6 col-lg-6">
+             {% if rotw %}
+               <!-- start rotw panel -->
+
+               <div class="panel panel-default">
+                 <div class="panel-heading clearfix">
+                   <h3 class="panel-title pull-left"><span class="glyphicon glyphicon-star"></span> Featured Referral</h3>
+                 </div>
+                 <div class="panel-body">
+                   <a href="{{ rotw.get_absolute_url }}">{{ rotw.title }}</a>
+                   <p>{{ rotw.info|truncatewords:30  }}</p>
+                   <table class="table">
+                     <thead>
+                       <tr>
+                           <th><span class="glyphicon glyphicon-eye-open"></span></th>
+                         <th><span class="glyphicon glyphicon-stats"></span></th>
+                         <th><span class="glyphicon glyphicon-thumbs-up"></span></th>
+                         <th><span class="glyphicon glyphicon-thumbs-down"></span></th>
+                           <th><span class="glyphicon glyphicon-user"></span></th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                           <td>{{ rotw.view_count }}</td>
+                           <td>{{ rotw.get_usage_count }}</td>{% comment %}TODO optimize{% endcomment %}
+                         <td>{{ rotw.yay|default:0 }}</td>
+                         <td>{{ rotw.nay|default:0 }}</td>
+                           <td><a href="{% url 'user_referral_list' rotw.author.username %}">{{ rotw.author }}</a></td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+
+               </div>
+               <!-- end rotw panel -->
+             {% endif %}
+            </div>
+        
+        
+                <div class="col-sm-6 col-lg-6">
+          <!-- start Categories panel -->
+          <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <h3 class="panel-title pull-left"><span class="glyphicon glyphicon-tags"></span>&nbsp;{% trans " Categories" %}</h3>
+            </div>
+            <div class="panel-body">
+              {% for category in categories %}
+                <p><a href="{% url 'category' category.slug %}">{{ category.title_plural|default:category.title }}</a> <span class="badge">{{ category.count }}</span></p>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- end Categories panel -->
+
+        </div>
+        
+        
+     
+        
+
+            
+            <div class="col-sm-6 col-lg-6">
+              <h2><span class="glyphicon glyphicon-tasks"></span> {% trans "Latest 5 Referrals" %}</h2>
+
+              <div class="list-group">
+                {% for referral in latest_referrals %}
+                  <a href="{{ referral.get_absolute_url }}" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ referral.title }}</h4>
+
+                    <p class="list-group-item-text">
+                      {% with referral.info|truncatewords:25 as short %}
+                        {% if referral.info|length > short|length %}
+                          {{ short|slice:"-3" }}...
+                        {% else %}
+                          {{ short }}
+                        {% endif %}
+                      {% endwith %}
+                    </p>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+
+        <div class="col-sm-6 col-lg-6">
+          <h2><span class="glyphicon glyphicon-random"></span> {% trans "Random 5 Referrals" %}</h2>
+
+          <div class="list-group">
+            {% for referral in random_referrals %}
+              <a href="{{ referral.get_absolute_url }}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ referral.title }}</h4>
+
+                <p class="list-group-item-text">
+                  {% with referral.info|truncatewords:25 as short %}
+                    {% if referral.info|length > short|length %}
+                      {{ short|slice:"-3" }}...
+                    {% else %}
+                      {{ short }}
+                    {% endif %}
+                  {% endwith %}
+                </p>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+    
+    </div>

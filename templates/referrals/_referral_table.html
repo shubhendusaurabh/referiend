@@ -1,0 +1,34 @@
+        <table class="table">
+          <thead>
+            <tr>
+                <th><span class="glyphicon glyphicon-list"></span></th>                   
+                <th><span class="glyphicon glyphicon-stats"></span></th>
+                <th><span class="glyphicon glyphicon-eye-open"></span></th>
+                <th><span class="glyphicon glyphicon-thumbs-up"></span></th>
+                <th><span class="glyphicon glyphicon-thumbs-down"></span></th>
+                <th><span class="glyphicon glyphicon-user"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+              
+              {% if referrals %}
+                {% for referral in referrals %}
+                  <tr>
+                      <td><a href="{{ referral.get_absolute_url }}">{{ referral.title }}</a></td>
+                    <td>     
+                      &nbsp;
+                        {% comment %} Optimize following db query {% endcomment %}
+                      <span class="usage-count">{{ referral.usage_count }}</span>
+                    </td>
+                        <td>{{ referral.view_count }}</td>
+                      <td>{{ referral.yay }}</td>
+                    <td>{{ referral.nay }}</td>
+                    <td><a href="{% url 'user_referral_list' referral.author.username %}">{{ referral.author.username }}</a></td>
+                  </tr>
+                {% endfor %}
+                  {% else %}
+              <tr><td><p class='text-muted'>No Referrals in {{ category.title }} category yet</p></td></tr>
+              {% endif %}
+              
+          </tbody>
+        </table>

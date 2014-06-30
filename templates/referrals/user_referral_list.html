@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load i18n humanize tz %}
+
+{% block head_title %}{{ author.username }}'s referrals{% endblock %}
+
+{% block body %}
+
+<h2> {{ author.username }}'s referrals</h2>
+
+    <table id="home-packages" class="table">
+        
+    
+        <thead>
+        <tr>
+            <th><span class="glyphicon glyphicon-align-justify"></span> Title</th>
+            <th><span class="glyphicon glyphicon-wrench"></span> Actions</th>
+            <th><span class="glyphicon glyphicon-plus-sign"></span> Added</th>
+            <th><span class="glyphicon glyphicon-exclamation-sign"></span> Active</th>
+            <th><span class="glyphicon glyphicon-eye-open"></span> Views</th>
+            <th><span class="glyphicon glyphicon-thumbs-up"></span> Yay</th>
+            <th><span class="glyphicon glyphicon-thumbs-down"></span> Nay</th>
+            <th><span class="glyphicon glyphicon-user"></span> Usage</th>
+            <th><span class="glyphicon glyphicon-time"></span> Validity </th>
+            
+        </tr>
+        </thead>
+        
+        <tbody>
+            {% for referral in referral_list %}
+
+                
+                <tr>
+                    <td>                        
+                        <a href="{{ referral.get_absolute_url }}">{{ referral.title }}</a>
+                    </td>
+                    <td>
+                        {% if request.user == referral.author %}
+                            {% include 'referrals/_action_buttons.html' %}
+                        {% else %}
+                            {% include 'referrals/_yayornay_form.html' %}
+                        {% endif %}
+                    </td>
+                    <td><span class="hide">{{ referral.created_at|date:"Y-m-d H:i:s" }}</span>{{ referral.created_at|naturaltime}}</td>
+                    <td>
+                        {% if referral.is_active %}
+                            <p class="text-success"><span class="glyphicon glyphicon-ok-sign"></span> </p>                           
+                        {% else %}
+                            <p class="text-danger"><span class="glyphicon glyphicon-remove-sign"></span> </p>                       
+                        {% endif %}                        
+                    </td>
+                    <td>{{ referral.view_count }}</td>
+                    <td>{{ referral.yay }}</td>
+                    <td>{{ referral.nay }}</td>
+                    <td>{{ referral.usage_count }}</td>
+                    <td>{{ referral.validity|timeuntil|default:'n/a' }}</td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

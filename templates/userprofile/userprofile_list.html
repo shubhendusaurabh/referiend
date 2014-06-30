@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "All Profiles" %}{% endblock %}
+
+{% block body %}
+
+<h2>{% trans "All Profiles" %}</h2>
+
+    <table id="home-packages" class="table">
+        
+    
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Date Joined</th>
+            <th>Staff</th>
+            {% if request.user.is_staff %}            
+            <th>{% trans "Active" %}</th>            
+            {% endif %}
+        </tr>
+        </thead>
+        
+        <tbody>
+            {% for user in users %}
+
+                {% with user.userprofile as profile %}
+                <tr>
+                    <td>
+                        
+                        {% if profile.facebook_account %}<a href="{% url 'userprofile_detail' profile.facebook_account %}">{{ profile.facebook_account }}</a>
+                        {% else %}
+                        <a href="{% url 'userprofile_detail' user.pk %}">{{ user.username }}</a>
+                        {% endif %}
+                    </td>
+                    <td><span class="hide">{{ user.date_joined|date:"Y-m-d H:i:s" }}</span>{{ user.date_joined|timesince }}</td>
+                    <td>
+                        {% if user.is_staff %}
+                            <p class="text-success"><span class="glyphicon glyphicon-ok-sign"></span> </p>                          
+                        {% else %}
+                            <p class="text-danger"><span class="glyphicon glyphicon-remove-sign"></span> </p>                           
+                        {% endif %}                        
+                    </td>
+                    {% if request.user.is_staff %}
+                        <td>
+                            {% if user.is_active %}
+                                <p class="text-success"><span class="glyphicon glyphicon-ok-sign"></span> </p>                            
+                            {% else %}
+                                <p class="text-danger"><span class="glyphicon glyphicon-remove-sign"></span> </p>                            
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endwith %}
+        {% endfor %}
+        </tbody>
+    </table>
+{{user.socialaccount_set.all.0.get_avatar_url}}
+{% endblock %}

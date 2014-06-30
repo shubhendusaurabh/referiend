@@ -1,0 +1,14 @@
+Django==1.6.5
+argparse==1.2.1
+django-allauth==0.16.1
+django-crispy-forms==1.4.0
+django-debug-toolbar==1.2.1
+ipdb==0.8
+ipython==2.1.0
+oauthlib==0.6.2
+python-openid==2.2.5
+pytz==2014.4
+requests==2.3.0
+requests-oauthlib==0.4.1
+sqlparse==0.1.11
+wsgiref==0.1.2

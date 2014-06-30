@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load userprofile_tags %}
+
+{% block head_title %}Profile for {{ userprofile.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-2">
+            <h2>{% blocktrans %}<span class="fn nickname">{{ userprofile }}</span>{% endblocktrans %}</h2>
+            
+            {% if request.user == userprofile.user %}
+            <p><a href="{% url 'userprofile_edit' user.pk %}">{% trans 'Edit my Profile' %}</a></p>
+            {% endif %}
+        </div>
+        
+        <div class="col-xs-5">
+          {% if user.referrer %}
+            <h3>{% trans "Referrals Created" %}</h3>
+            <table class="table">
+              <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>{% trans "Referral" %}</th>
+                    <th><span class="glyphicon glyphicon-eye-open"></span> {% trans "Views" %}</th>                                                
+                  </tr>
+              </thead>
+              <tbody>
+              {% for referral in userprofile.user.referrer.select_related.all %}    
+                <tr>
+                  <td>{{ forloop.counter }}</td>                        
+                  <td><a href="{{ referral.get_absolute_url }}">{{ referral.title }}</a></td>
+                  <td>{{ referral.view_count }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        </div>
+        
+    <div class="col-xs-5">
+        <h3>{% trans "Referrals Used" %}</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>{% trans "Referral" %}</th>
+                <th><span class="glyphicon glyphicon-eye-open"></span> Views</th>                                                
+              </tr>
+            </thead>                    
+            <tbody>
+              {% for referral in userprofile.user.referee.select_related.all %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>                        
+                    <td><a href="{{ referral.get_absolute_url }}">{{ referral.title }}</a></td>
+                    <td>{{ referral.view_count }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>                    
+
+      </div>
+        
+    </div>
+
+{% endblock body %}

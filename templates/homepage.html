@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block head_title %}{{ SITE_TITLE }} social referrals, social coupon {% endblock head_title %}
+{% block extra_head %}
+<style>
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+</style>
+{% endblock extra_head %}
+{% block body %}
+{% include '_homepage.html' %}
+{% endblock %}

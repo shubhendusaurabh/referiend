@@ -1,0 +1,12 @@
+{% extends 'referrals/referral_base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+  <div>
+    <h3>{% if referral %}Updating {{ referral.title }}{% else %}Add New Referral{% endif %}</h3>
+    <form action="" method="POST">{% csrf_token %}
+        {{ form|crispy }}
+          <button type="submit" class="btn btn-success">Save</button>
+    </form>
+  </div>
+{% endblock %}

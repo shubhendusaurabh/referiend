@@ -1,0 +1,46 @@
+{% extends 'referrals/referral_base.html' %}
+{% load humanize %}
+
+{% load i18n %}
+
+{% block head_title %}{{ referral.title }}{% endblock %}
+
+{% block extra_head %}
+  <meta name="description" content="{{ referral.info|truncatewords:50 }}" />
+  <meta name="keywords" content="{{ referral.category.all|join:',' }}" />
+  {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+ <ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+  <li><a href="{% url 'referral_list' %}">{% trans "Referrals" %}</a></li>
+  <li class="active">{{ referral.title }}</li>
+</ol>
+    
+<div class="row">
+  <div class="col-md-12">
+      <div class="well">
+        <div class="page-header">
+          <h1>{{ referral.title }} <small>{{ referral.company }}</small></h1>
+        </div>
+            <p>
+                {{ referral.info }}
+            </p>
+          <div>
+              {% if request.user == referral.author %}
+              {% include 'referrals/_action_buttons.html' %}
+              
+              {% else %}
+{% include 'referrals/_yayornay_form.html' %}
+              {% endif %}
+          </div>
+          
+
+          
+        </div>
+  
+  </div> <!-- end six column section -->
+</div>
+{% endblock %}

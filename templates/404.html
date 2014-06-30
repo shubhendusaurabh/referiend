@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans 'Not Found' %}{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <h2>{% trans "Not Found" %}</h2>
+        <p>
+            {% trans "We can't find it! Oh No! The page isn't here!" %}
+        </p>
+        <p>
+            {% trans 'Please care to inform the admins ' %}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+    <div class="col-md-4">
+        <p>&copy; <a href='{% url "home" %}'> Referiend</a></p>
+    </div>
+    <div class="col-md-8">
+        <ul class="nav nav-pills">
+            {% for page in flatpages %}
+            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>

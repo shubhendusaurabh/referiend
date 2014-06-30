@@ -1,0 +1,11 @@
+{% extends 'referrals/referral_base.html' %}
+{% block head_title %}Confirm Delete {{ block.super }}{% endblock head_title %}
+{% block content %}
+  <div>
+    <h3>Are you sure you want to delete {{ referral.title }} ({{referral.company}})?</h3>
+    <form action="" method="POST">{% csrf_token %}
+      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+      <button onclick="window.history.go(-1);"  type="reset" class="btn btn-warning"><span class="glyphicon glyphicon-step-backward"></span> Cancel</button>
+    </form>
+  </div>
+{% endblock content %}

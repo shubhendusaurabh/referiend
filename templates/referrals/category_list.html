@@ -1,0 +1,29 @@
+{% extends 'referrals/referral_base.html' %}
+
+{% load i18n %}
+
+{% block head_title %}Categories{% endblock head_title %}
+{% block body %}
+
+  <div class="row">
+          <div class="col-xs-12">
+        
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+              <li class="active">{% trans "All Categories" %} ( {{ categories|length }} )</li>
+            </ol>
+    </div>
+    <div class="col-lg-12">
+        
+        <div class="list-group">
+            {% for category in categories %}
+          <a href="{% url 'category' category.slug %}" class="list-group-item">
+              <h2 class="list-group-item-heading">{{ category.title_plural|default:category.title }} ({{ category.referral_count }})</h2>
+            <p class="list-group-item-text">{{ category.description }}</p>
+          </a>
+            {% endfor %}
+        </div>
+    </div>
+      </div>
+
+{% endblock %}     
