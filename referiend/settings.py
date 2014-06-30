@@ -33,12 +33,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,7 +50,6 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
 
     # external
-    'debug_toolbar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -79,7 +73,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'referiend.urls'
@@ -115,6 +108,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+)
 
 AUTHENTICATION_BACKENDS = (
         # Needed to login by username in django admin
@@ -163,12 +162,27 @@ TEMPLATE_DIRS = (
         os.path.join(BASE_DIR, 'templates'),
 )
 
-STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-)
-
-INTERNAL_IPS = ('127.0.0.1',)
-
-STATIC_ROOT = 'staticfiles'
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+if get_env_variable('DEVELOPMENT') == True:
+    INSTALLED_APPS += ('debug_toolbar', )
+
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+
+    INTERNAL_IPS = ('127.0.0.1', )
+
+    DEBUG = True
+
+    TEMPLATE_DEBUG = True
+
+
