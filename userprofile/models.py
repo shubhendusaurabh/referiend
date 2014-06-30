@@ -1,5 +1,8 @@
 from django.db import models
+from django.dispatch import receiver
 from django.contrib.auth.models import User
+
+from allauth.account.signals import user_signed_up
 
 from core.models import TimeStampedModel
 
@@ -33,3 +36,13 @@ class UserProfile(TimeStampedModel):
             user_obj.save()
 
         super(UserProfile, self).save(**kwargs)
+
+
+@receiver(user_signed_up)
+def create_userprofile(sender, **kwargs):
+    request = kwargs['request']
+    user = kwargs['user']
+    
+    obj, created = UserProfile.objects.get_or_create(user=user, email=user.email)
+    
+    
