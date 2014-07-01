@@ -6,12 +6,12 @@ from referrals.feeds import AtomLatestReferralsFeed, RssLatestReferralsFeed
 import views
 
 urlpatterns = patterns('referrals.views',
-        url(r'^referrals/(?P<pk>\d+)/(?P<slug>[\w-]+)/$', 'referraldetail', name='referral_detail'),
-        url(r'^referrals/add/$', views.referralcreate, name='referral_add'),
-        url(r'^referrals/edit/(?P<pk>\d+)/$', views.referralupdate, name='referral_update'),
-        url(r'^referrals/delete/(?P<pk>\d+)/$', views.referraldelete, name='referral_delete'),
-        url(r'^referrals/$', 'referrallist', name='referral_list'),
-        url(r'^referrals/user/(?P<username>\w+)/$', views.userreferrallist, name='user_referral_list'),
+        url(r'^(?P<pk>\d+)/(?P<slug>[\w-]+)/$', 'referraldetail', name='referral_detail'),
+        url(r'^add/$', views.referralcreate, name='referral_add'),
+        url(r'^edit/(?P<pk>\d+)/$', views.referralupdate, name='referral_update'),
+        url(r'^delete/(?P<pk>\d+)/$', views.referraldelete, name='referral_delete'),
+        url(r'^$', 'referrallist', name='referral_list'),
+        url(r'^user/(?P<username>\w+)/$', views.userreferrallist, name='user_referral_list'),
         
         url(
             regex=r"^latest/$",
