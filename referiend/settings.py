@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.humanize',
     'django.contrib.flatpages',
 
@@ -175,6 +176,13 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+EMAIL_HOST = get_env_variable('EMAIL_HOST')
+EMAIL_PORT = get_env_variable('EMAIL_PORT')
+EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = get_env_variable('DEFAULT_FROM_EMAIL')
+
 if get_env_variable('DEVELOPMENT') == 'True':
     INSTALLED_APPS += ('debug_toolbar', )
 
@@ -192,4 +200,6 @@ if get_env_variable('DEVELOPMENT') == 'True':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
+    #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
