@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="{% static 'css/lumen.min.css' %}">
     <link rel='shortcut icon' href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel='icon' href='{% static "img/favicon.ico" %}' type='image/x-icon'>
+    
+    <link type="application/atom+xml" rel="alternate" href="{% url 'feeds_latest_referrals_atom' %}" />
+    <link type="application/rss+xml" rel="alternate" href="{% url 'feeds_latest_referrals_rss' %}" />
+    
     {% block extra_head %}
     
     {% endblock %}
