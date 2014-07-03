@@ -16,6 +16,8 @@ def search_function(q):
                 Q(title__icontains=q) |
                 Q(slug__startswith=q.lower()) |
                 Q(info__icontains=q) )
+    else:
+        items = Referral.objects.select_related()
     return items
 def search(request):
 
