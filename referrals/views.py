@@ -1,5 +1,6 @@
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+import json
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -7,14 +8,13 @@ from django.db.models import Count
 from django.utils.text import slugify
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from core.views import LoginRequiredMixin, UserCheckMixin
 
 import models
 from referrals.models import Category, Referral
-from homepage.models import Rotw
 import forms
 
 class ReferralList(ListView):
@@ -84,7 +84,7 @@ referralcreate = ReferralCreate.as_view()
 class ReferralUpdate(LoginRequiredMixin, UserCheckMixin, SuccessMessageMixin, UpdateView):
     model = models.Referral
     form_class = forms.ReferralForm
-    success_message = "%(title)s updated successfully"    
+    success_message = "%(title)s updated successfully"
 referralupdate = ReferralUpdate.as_view()
 
 class ReferralDelete(LoginRequiredMixin, UserCheckMixin, DeleteView):
@@ -117,7 +117,7 @@ categorylist = CategoryList.as_view()
 
 
 def yayOrNay(request):
-    success = False
+    #success = False
     referral = get_object_or_404(Referral, id=request.POST['id'])
     url = referral.get_absolute_url()
     if request.POST.has_key('yay'):
