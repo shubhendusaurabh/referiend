@@ -1,4 +1,4 @@
-from django.contrib.sitemaps import Sitemap, FlatPageSitemap
+from django.contrib.sitemaps import Sitemap
 
 from .models import Referral
 
